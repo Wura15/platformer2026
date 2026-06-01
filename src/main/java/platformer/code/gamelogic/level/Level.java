@@ -194,11 +194,80 @@ public class Level {
 	
 	
 	//#############################################################################################################
-	//Your code goes here! 
-	//Please make sure you read the rubric/directions carefully and implement the solution recursively!
-	private void water(int col, int row, Map map, int fullness) {
-		
-	}
+   //Your code goes here!
+   //Please make sure you read the rubric/directions carefully and implement the solution recursively!
+   private void water(int col, int row, Map map, int fullness) {
+       System.out.println("trying to water");
+String water = "";
+{
+if (fullness == 0) {
+water = "Falling_water";
+} else if (fullness == 1) {
+water = "Quarter_water";
+} else if (fullness == 2) {
+water = "Half_water";
+} else if (fullness == 3) {
+water = "Full_water";
+}
+}
+// boolean variables
+
+
+Boolean down1 = row + 1 < map.getTiles()[col].length;
+Boolean up1 = row - 1 >= 0;
+Boolean left1 = col - 1 >= 0;
+Boolean right1 = col + 1 < map.getTiles().length;
+Boolean nothingLeft = left1 && !(map.getTiles()[col - 1][row] instanceof Water)
+&& !(map.getTiles()[col - 1][row].isSolid());
+Boolean nothingRight = right1 && !(map.getTiles()[col + 1][row] instanceof Water)
+&& !(map.getTiles()[col + 1][row].isSolid());
+
+
+Water w = new Water(col, row, tileSize, tileset.getImage(water), this, fullness);
+map.addTile(col, row, w);
+if (down1 && !(map.getTiles()[col][row + 1].isSolid())) {
+
+
+if (row + 2 < map.getTiles()[col].length && map.getTiles()[col][row + 2].isSolid()) {
+
+
+water(col, row + 1, map, 3);
+} else {
+water(col, row + 1, map, 0);
+}
+
+
+} else {
+
+
+if (nothingLeft) {
+
+
+if (fullness > 1)
+water(col - 1, row, map, fullness - 1);
+else {
+water(col - 1, row, map, 1);
+}
+}
+if (nothingRight) {
+
+
+if (fullness > 1)
+water(col + 1, row, map, fullness - 1);
+else {
+water(col + 1, row, map, 1);
+}
+}
+}
+}
+
+
+
+
+
+
+
+
 
 
 
